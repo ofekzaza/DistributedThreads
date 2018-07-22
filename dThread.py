@@ -22,6 +22,7 @@ class DThread():
         self.s.bind(('', int(self.port)))
 
     def run(self, target : int,  code: str): # code is in c!
+        self.answer = None
         dic ={}
         dic['Name'] = str(target)
         dic['Code'] = code
@@ -34,13 +35,13 @@ class DThread():
     def listen(self):
         while 1:
             data, address = self.s.recvfrom(1024)
-            if(data is not None):
+            if(data != None):
                 data = str(data, 'utf-8')
                 try:
                     jsonObject = json.loads(data)
                 except Exception:
                     print()
-                if("master" == jsonObject["name"]):
+                if("master" == jsonObject["Name"]):
                     self.answer = jsonObject["answer"]
                     return
 
